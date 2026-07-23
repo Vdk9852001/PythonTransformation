@@ -1,0 +1,49 @@
+Understanding the S/4HANA Migration Cockpit XML Template (SpreadsheetML) 
+
+Overview 
+
+The uploaded Product migration template is not a normal business XML file. It is a Microsoft Excel 2003 XML Spreadsheet (SpreadsheetML). SAP Migration Cockpit uses this workbook-like XML structure to store worksheets, columns, styles, and data. 
+
+Workbook Structure 
+
+The root element is Workbook. Inside the workbook are Worksheet elements. Each Worksheet represents a migration section such as Basic Data, Plant Data, Valuation Data, Warehouse Product, and others. 
+
+Worksheets 
+
+The template contains informational worksheets and business worksheets. Introduction and Field List are informational and should not be populated. Business worksheets receive migration records. 
+
+Worksheet Layout 
+
+Each Worksheet contains a Table. The Table contains Rows. Rows contain Cells. Cells contain Data elements. Values entered into SAP migration files ultimately appear inside Data elements. 
+
+Introduction Section 
+
+Rows styled with INTRO or INTRO_UT contain help text and instructions. These rows must remain untouched and should be ignored by automation. 
+
+Field Mapping Concept 
+
+Each worksheet represents a specific migration entity. Columns correspond to S/4 target fields. The mapping workbook determines which SAP 4.7 field populates each S/4 field. 
+
+Transformation Flow 
+
+SAP 4.7 CSV -> Field Mapping -> Join Logic -> Value Mapping -> Business Rules -> Worksheet Population -> Final SAP XML Workbook. 
+
+Business Rules 
+
+WAERS is derived from BWKEY. MLAST is set to 3. CURTP is set to 10. ENTITLED is derived from LGNUM according to warehouse mappings. 
+
+Joins 
+
+Material migration generally requires MARA as the base table, enriched with MAKT, MARC, MBEW, MLAN, MARM and other tables through joins on keys such as MATNR. 
+
+XML Population Strategy 
+
+Do not create a new Products XML. Open the SAP template, preserve workbook styles and formatting, locate data rows, duplicate template rows, populate values, and save the workbook. 
+
+Error Handling 
+
+Collect missing mappings, missing source columns, and unmapped values into an error list and display them at the end of processing. 
+
+Recommended Architecture 
+
+UI Layer -> Mapping Engine -> Value Mapping Engine -> Business Rules -> SpreadsheetML Writer -> Output XML. 
