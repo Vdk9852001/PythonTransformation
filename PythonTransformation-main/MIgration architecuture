@@ -1,0 +1,41 @@
+SAP 4.7 to S/4HANA Product Migration Tool - Observations and Recommendations 
+
+Current State 
+
+Current app loads mapping Excel, value mapping Excel, SAP 4.7 CSV extracts, builds a dataframe, applies mappings and generates XML. 
+
+Major Issue 
+
+Current XML output is generic Products XML. SAP Migration Cockpit template is SpreadsheetML Excel 2003 XML and must be preserved. 
+
+SAP Template Observations 
+
+Skip worksheets Introduction and Field List. Skip rows with styles INTRO and INTRO_UT. 
+
+Missing Functionality 
+
+Join logic between MARA, MAKT, MARC, MBEW, MLAN, MARM and other SAP source tables is required. 
+
+Business Rules 
+
+WAERS derived from BWKEY. MLAST=3. CURTP=10. ENTITLED derived from LGNUM. 
+
+Value Mapping 
+
+Use map(...).fillna(original) and collect unmapped values. 
+
+Error Handling 
+
+Maintain error collector, error report dialog, and logging. 
+
+XML Strategy 
+
+Open SAP XML template, preserve workbook structure, clone data rows, populate worksheets, save SpreadsheetML output. 
+
+Recommended Architecture 
+
+Load CSVs -> Mapping -> Joins -> Value Mapping -> Business Rules -> Final DataFrame -> Populate SAP SpreadsheetML -> Generate output XML. 
+
+Assessment 
+
+UI, logging, mappings and progress bar are good. XML generation layer must be redesigned to support SAP SpreadsheetML. 
