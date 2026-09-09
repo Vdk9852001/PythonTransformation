@@ -1,0 +1,260 @@
+Act as an Enterprise Solution Architect,
+Business Analyst,
+ETL Architect,
+Python Architect,
+Data Migration Architect,
+AI Architect.
+
+Create a complete on-premise AI-Powered Metadata Driven ETL Platform.
+
+The solution must not use any cloud services.
+
+Business Requirements
+
+Source Database:
+- PostgreSQL
+
+Output Types:
+- CSV
+- XML
+- JSON
+
+The platform must support migration objects.
+
+Each object should contain:
+
+1. Extraction
+
+2. Transformation
+
+3. Load Preparation
+
+
+Extraction Module
+
+- PostgreSQL connector
+- Connection manager
+- Schema discovery
+- Table discovery
+- Query builder
+- SQL editor
+- Extract data into Pandas dataframe
+- Incremental extraction support
+
+
+Transformation Module
+
+Support template driven transformations.
+
+Templates:
+
+A. Field Mapping Template
+
+Fields:
+- SourceTable
+- SourceField
+- TargetField
+- Datatype
+- DefaultValue
+- RequiredFlag
+
+B. Value Mapping Template
+
+Fields:
+- SourceValue
+- TargetValue
+
+C. Transformation Rule Template
+
+Fields:
+- RuleID
+- RuleDescription
+
+Example:
+
+If STATUS='A'
+then ACTIVE='YES'
+else ACTIVE='NO'
+
+The rule engine must convert natural language
+rules into executable Python transformation code.
+
+
+AI Engine Requirements
+
+Use local LLM only.
+
+Supported Models:
+
+- Ollama
+- Llama3
+- Mistral
+- DeepSeek
+
+No cloud integration.
+
+AI Functions:
+
+- Generate Python transformation code
+- Generate field mapping suggestions
+- Generate value mapping suggestions
+- Generate SQL query suggestions
+- Generate validation rules
+- Explain transformation logic
+
+
+Field Mapping Engine
+
+- Rename fields
+- Datatype conversion
+- Null handling
+- Default values
+- Mandatory field validation
+
+
+Value Mapping Engine
+
+- Lookup mappings
+- Reference mappings
+- Bulk mappings
+
+
+Transformation Engine
+
+- Execute generated Python
+- Rule chaining
+- Derived fields
+- String manipulation
+- Date transformations
+- Numeric calculations
+
+
+Validation Framework
+
+Implement:
+
+- Null validation
+- Duplicate detection
+- Datatype validation
+- Length validation
+- Custom validation
+- Record count validation
+
+Generate:
+
+- Validation Report
+- Error Report
+- Reject File
+
+
+Load Preparation
+
+Generate:
+- CSV
+- XML
+- JSON
+
+Support combining multiple source tables
+into a single target object.
+
+
+UI Requirements
+
+Menu:
+
+Dashboard
+Projects
+Objects
+Connections
+Extractions
+Field Mappings
+Value Mappings
+Transformation Rules
+Executions
+Reports
+Administration
+
+Object Designer
+
+Drag and drop pipeline designer
+
+Extraction →
+Transformation →
+Validation →
+Output
+
+
+Metadata Repository
+
+Store:
+
+Objects
+Connections
+Mappings
+Rules
+Execution Logs
+Audit Logs
+Validation Results
+
+
+Security
+
+LDAP integration
+RBAC
+Audit Logging
+
+
+Technology Stack
+
+Frontend:
+React
+TypeScript
+Material UI
+
+Backend:
+Python FastAPI
+
+Metadata Database:
+PostgreSQL
+
+AI:
+Ollama
+
+Data Processing:
+Pandas
+Polars
+
+Workflow:
+Airflow
+
+Deployment:
+Docker
+Docker Compose
+
+Generate:
+
+1. Detailed architecture
+2. Database schema
+3. ERD
+4. API design
+5. Folder structure
+6. Backend source code
+7. Frontend source code
+8. ETL engine code
+9. AI integration code
+10. Docker deployment
+11. Airflow orchestration
+12. Unit tests
+13. Integration tests
+14. Production deployment guide
+
+Use clean architecture,
+repository pattern,
+service layer,
+dependency injection,
+logging,
+error handling,
+and enterprise coding standards.
+
+Generate all modules completely.
+``
