@@ -1,260 +1,543 @@
-Act as an Enterprise Solution Architect,
-Business Analyst,
-ETL Architect,
-Python Architect,
-Data Migration Architect,
-AI Architect.
+You are a Principal Enterprise Architect, SAP S/4HANA Public Cloud Data Migration Lead, Data Governance Architect, and Senior Python Platform Engineer.
 
-Create a complete on-premise AI-Powered Metadata Driven ETL Platform.
+Your task is NOT to create a simple Python script.
 
-The solution must not use any cloud services.
+Your task is to design a complete enterprise-grade Metadata-Driven SAP S/4HANA Migration Factory that automates source extraction, transformation, validation, staging, reconciliation, audit logging, governance, and SAP Migration Cockpit XML generation.
 
-Business Requirements
+=========================================================
+BUSINESS CONTEXT
+=========================================================
 
-Source Database:
-- PostgreSQL
+I currently have:
 
-Output Types:
+1. Source data stored in PostgreSQL
+2. Field Mapping maintained in files/folders
+3. Value Mapping maintained in files/folders
+4. Python transformation logic spread across multiple Python files
+5. Manual generation of transformed output
+6. Manual validation
+7. Manual correction of formats
+8. Manual XML preparation for SAP Migration Cockpit upload
+
+The current process has:
+
+- Too much manual effort
+- Poor governance
+- Hardcoded logic
+- No auditability
+- No version control
+- Difficult onboarding of new SAP migration objects
+- Heavy dependency on developer knowledge
+
+I want to completely redesign this as a governed, scalable, metadata-driven migration platform.
+
+=========================================================
+TARGET OBJECTIVE
+=========================================================
+
+Design a reusable SAP Migration Factory where:
+
+- Source data is extracted directly from PostgreSQL
+- Field mappings are stored in PostgreSQL metadata tables
+- Value mappings are stored in PostgreSQL metadata tables
+- Transformation rules are stored in PostgreSQL metadata tables
+- Validation rules are stored in PostgreSQL metadata tables
+- XML structures are configurable through metadata
+- New migration objects can be onboarded without code changes
+- New mappings can be added without code changes
+- New value mappings can be added without code changes
+- New validation rules can be added without code changes
+- SAP upload files are generated automatically
+- XML files are generated automatically
+- Full audit trail exists
+- Full lineage exists
+- Full reconciliation exists
+
+=========================================================
+CURRENT SOURCE SYSTEM
+=========================================================
+
+PostgreSQL
+
+Data will be extracted from PostgreSQL.
+
+Metadata tables should also be stored in PostgreSQL.
+
+=========================================================
+REQUIRED ARCHITECTURE
+=========================================================
+
+Design a full framework with the following layers:
+
+1. Metadata Repository Layer
+2. Source Extraction Layer
+3. Transformation Layer
+4. Data Quality Layer
+5. Staging Layer
+6. Governance Layer
+7. XML Generation Layer
+8. Reporting Layer
+9. Audit Layer
+10. Orchestration Layer
+
+=========================================================
+METADATA-DRIVEN DESIGN
+=========================================================
+
+Create metadata tables for:
+
+Migration Objects
+
+source_system
+migration_object
+
+Field Mapping
+
+field_mapping
+
+Fields:
+
+- source_system
+- object_name
+- source_field
+- target_field
+- target_datatype
+- default_value
+- mandatory_flag
+- transformation_rule_id
+- mapping_version
+- effective_date
+- expiry_date
+- approval_status
+
+Value Mapping
+
+value_mapping
+
+Fields:
+
+- source_system
+- object_name
+- source_value
+- target_value
+- mapping_type
+- version
+- approval_status
+
+Transformation Rules
+
+transformation_rule
+
+Fields:
+
+- rule_id
+- rule_name
+- rule_type
+- expression
+- active_flag
+
+Validation Rules
+
+validation_rule
+
+Fields:
+
+- object_name
+- field_name
+- validation_type
+- validation_expression
+- severity
+
+XML Definitions
+
+xml_template
+xml_node_mapping
+
+Audit Tables
+
+audit_log
+job_execution_log
+
+Approval Tables
+
+mapping_approval
+
+=========================================================
+TRANSFORMATION ENGINE
+=========================================================
+
+Create a metadata-driven transformation engine that supports:
+
+String Functions
+
+- trim
+- uppercase
+- lowercase
+- replace
+- substring
+- split
+- concatenate
+
+Date Functions
+
+- format conversion
+- timezone conversion
+- SAP date formatting
+
+Numeric Functions
+
+- rounding
+- scaling
+- percentage calculation
+
+Conditional Logic
+
+- IF THEN ELSE
+- CASE WHEN
+
+Lookup Functions
+
+- value mapping
+- crosswalk mapping
+
+Default Rules
+
+- default values
+- fallback values
+
+Null Handling
+
+- blank to null
+- null replacement
+
+All transformations must be driven entirely through metadata.
+
+No hardcoded business logic.
+
+=========================================================
+DATA QUALITY FRAMEWORK
+=========================================================
+
+Build a reusable validation framework supporting:
+
+Completeness Validation
+
+- mandatory fields
+
+Datatype Validation
+
+- string
+- integer
+- decimal
+- date
+- timestamp
+
+Business Validations
+
+- company code validation
+- profit center validation
+- object specific validation
+
+Duplicate Detection
+
+Referential Integrity
+
+Value Mapping Validation
+
+Unmapped Value Detection
+
+Data Quality Score Calculation
+
+Great Expectations integration.
+
+=========================================================
+STAGING MODEL
+=========================================================
+
+Create a governed staging architecture.
+
+Layers:
+
+RAW
+STANDARDIZED
+VALIDATED
+APPROVED
+READY_FOR_SAP
+
+Include:
+
+- Error tables
+- Rejection tables
+- Quarantine tables
+
+=========================================================
+GOVERNANCE FRAMEWORK
+=========================================================
+
+Design a complete governance model.
+
+Include:
+
+Version Control
+
+effective_date
+expiry_date
+version_number
+
+Approval Workflow
+
+DRAFT
+UAT
+APPROVED
+PRODUCTION
+RETIRED
+
+Auditability
+
+Track:
+
+- who created mapping
+- who modified mapping
+- when it changed
+- previous value
+- new value
+
+Lineage
+
+Source Field
+→ Transformation
+→ Staging Field
+→ XML Node
+
+=========================================================
+XML GENERATION FRAMEWORK
+=========================================================
+
+Generate SAP Migration Cockpit compatible XML.
+
+Requirements:
+
+- Metadata driven
+- Dynamic node generation
+- Nested structures
+- Parent-child relationships
+- Repeating nodes
+- Optional nodes
+- Namespace support
+- XSD validation
+
+No XML elements may be hardcoded.
+
+XML structure should come from metadata tables.
+
+=========================================================
+REPORTING FRAMEWORK
+=========================================================
+
+Generate:
+
+1. Data Quality Report
+2. Mapping Coverage Report
+3. Validation Error Report
+4. Reconciliation Report
+5. Execution Summary Report
+
+Formats:
+
+- Excel
 - CSV
-- XML
-- JSON
+- PDF
 
-The platform must support migration objects.
+=========================================================
+OBSERVABILITY
+=========================================================
 
-Each object should contain:
+Create monitoring dashboards for:
 
-1. Extraction
+Records Extracted
+Records Transformed
+Records Validated
+Records Rejected
+Records Loaded
+Records Converted To XML
 
-2. Transformation
+Processing Time
 
-3. Load Preparation
+Data Quality %
 
+Top Mapping Issues
 
-Extraction Module
+Top Validation Failures
 
-- PostgreSQL connector
-- Connection manager
-- Schema discovery
-- Table discovery
-- Query builder
-- SQL editor
-- Extract data into Pandas dataframe
-- Incremental extraction support
+=========================================================
+SECURITY
+=========================================================
 
+Design enterprise security.
 
-Transformation Module
+Use:
 
-Support template driven transformations.
+- Azure Key Vault
+- Managed Identity
+- Secrets Management
+- Encryption At Rest
+- Encryption In Transit
 
-Templates:
+Role Based Access:
 
-A. Field Mapping Template
+Admin
 
-Fields:
-- SourceTable
-- SourceField
-- TargetField
-- Datatype
-- DefaultValue
-- RequiredFlag
+Migration Lead
 
-B. Value Mapping Template
+Developer
 
-Fields:
-- SourceValue
-- TargetValue
+Business User
 
-C. Transformation Rule Template
+Approver
 
-Fields:
-- RuleID
-- RuleDescription
+Viewer
+
+=========================================================
+TECHNOLOGY STACK
+=========================================================
+
+Python 3.11+
+
+Libraries:
+
+- pandas
+- polars
+- sqlalchemy
+- psycopg2
+- pydantic
+- lxml
+- great_expectations
+- loguru
+- openpyxl
+- pytest
+
+Infrastructure:
+
+- PostgreSQL
+- Docker
+- GitHub Actions
+- Azure DevOps
+- Apache Airflow
+
+=========================================================
+EXPECTED DELIVERABLES
+=========================================================
+
+Provide all of the following:
+
+1. Executive Summary
+
+2. Enterprise Architecture Diagram (Mermaid)
+
+3. End-to-End Data Flow Diagram (Mermaid)
+
+4. PostgreSQL ER Diagram
+
+5. Complete PostgreSQL DDL Scripts
+
+6. Complete Folder Structure
 
 Example:
 
-If STATUS='A'
-then ACTIVE='YES'
-else ACTIVE='NO'
+migration_factory/
+│
+├── config
+├── metadata
+├── src
+│   ├── extract
+│   ├── transform
+│   ├── validation
+│   ├── staging
+│   ├── xml
+│   ├── reporting
+│   ├── governance
+│   ├── audit
+│   └── orchestration
+│
+├── tests
+├── reports
+├── logs
+├── output
+└── docs
 
-The rule engine must convert natural language
-rules into executable Python transformation code.
+7. Class Designs
 
+Create production-quality implementations for:
 
-AI Engine Requirements
+- DatabaseManager
+- MetadataRepository
+- ObjectRegistry
+- SourceExtractor
+- TransformationEngine
+- MappingProcessor
+- ValidationEngine
+- StagingManager
+- XMLGenerator
+- AuditManager
+- ReportManager
+- WorkflowOrchestrator
 
-Use local LLM only.
+8. YAML Configuration Structure
 
-Supported Models:
+9. Logging Framework Design
 
-- Ollama
-- Llama3
-- Mistral
-- DeepSeek
+10. Error Handling Strategy
 
-No cloud integration.
+11. Retry Mechanism
 
-AI Functions:
+12. Rollback Strategy
 
-- Generate Python transformation code
-- Generate field mapping suggestions
-- Generate value mapping suggestions
-- Generate SQL query suggestions
-- Generate validation rules
-- Explain transformation logic
+13. Quarantine Handling
 
+14. Airflow DAG Design
 
-Field Mapping Engine
+15. Docker Deployment Design
 
-- Rename fields
-- Datatype conversion
-- Null handling
-- Default values
-- Mandatory field validation
+16. GitHub Actions CI/CD Design
 
+17. Testing Strategy
 
-Value Mapping Engine
+18. Performance Optimization Strategy
 
-- Lookup mappings
-- Reference mappings
-- Bulk mappings
+19. Scalability Strategy
 
+Design for:
 
-Transformation Engine
+- 1 Million Records
+- 5 Million Records
+- 10 Million Records
+- 50 Million Records
 
-- Execute generated Python
-- Rule chaining
-- Derived fields
-- String manipulation
-- Date transformations
-- Numeric calculations
+Include:
 
+- Parallel Processing
+- Bulk Loads
+- Chunk Processing
+- PostgreSQL Partitioning
+- Incremental Processing
 
-Validation Framework
+20. Complete End-To-End Execution Flow
 
-Implement:
+Show:
 
-- Null validation
-- Duplicate detection
-- Datatype validation
-- Length validation
-- Custom validation
-- Record count validation
+PostgreSQL Source
+→ Metadata Retrieval
+→ Transformation
+→ Validation
+→ Staging
+→ Reconciliation
+→ XML Generation
+→ SAP Migration Cockpit Upload File
 
-Generate:
+=========================================================
+FINAL EXPECTATION
+=========================================================
 
-- Validation Report
-- Error Report
-- Reject File
+Produce a complete production-ready blueprint, architecture, database design, governance model, class design, deployment design, and implementation strategy for an Enterprise Metadata-Driven SAP S/4HANA Public Cloud Migration Factory.
 
-
-Load Preparation
-
-Generate:
-- CSV
-- XML
-- JSON
-
-Support combining multiple source tables
-into a single target object.
-
-
-UI Requirements
-
-Menu:
-
-Dashboard
-Projects
-Objects
-Connections
-Extractions
-Field Mappings
-Value Mappings
-Transformation Rules
-Executions
-Reports
-Administration
-
-Object Designer
-
-Drag and drop pipeline designer
-
-Extraction →
-Transformation →
-Validation →
-Output
-
-
-Metadata Repository
-
-Store:
-
-Objects
-Connections
-Mappings
-Rules
-Execution Logs
-Audit Logs
-Validation Results
-
-
-Security
-
-LDAP integration
-RBAC
-Audit Logging
-
-
-Technology Stack
-
-Frontend:
-React
-TypeScript
-Material UI
-
-Backend:
-Python FastAPI
-
-Metadata Database:
-PostgreSQL
-
-AI:
-Ollama
-
-Data Processing:
-Pandas
-Polars
-
-Workflow:
-Airflow
-
-Deployment:
-Docker
-Docker Compose
-
-Generate:
-
-1. Detailed architecture
-2. Database schema
-3. ERD
-4. API design
-5. Folder structure
-6. Backend source code
-7. Frontend source code
-8. ETL engine code
-9. AI integration code
-10. Docker deployment
-11. Airflow orchestration
-12. Unit tests
-13. Integration tests
-14. Production deployment guide
-
-Use clean architecture,
-repository pattern,
-service layer,
-dependency injection,
-logging,
-error handling,
-and enterprise coding standards.
-
-Generate all modules completely.
-``
+The solution should allow onboarding of new SAP migration objects entirely through metadata without requiring code changes.
