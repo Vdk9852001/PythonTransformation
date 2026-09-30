@@ -1,543 +1,1487 @@
-You are a Principal Enterprise Architect, SAP S/4HANA Public Cloud Data Migration Lead, Data Governance Architect, and Senior Python Platform Engineer.
-
-Your task is NOT to create a simple Python script.
-
-Your task is to design a complete enterprise-grade Metadata-Driven SAP S/4HANA Migration Factory that automates source extraction, transformation, validation, staging, reconciliation, audit logging, governance, and SAP Migration Cockpit XML generation.
-
-=========================================================
-BUSINESS CONTEXT
-=========================================================
-
-I currently have:
-
-1. Source data stored in PostgreSQL
-2. Field Mapping maintained in files/folders
-3. Value Mapping maintained in files/folders
-4. Python transformation logic spread across multiple Python files
-5. Manual generation of transformed output
-6. Manual validation
-7. Manual correction of formats
-8. Manual XML preparation for SAP Migration Cockpit upload
-
-The current process has:
-
-- Too much manual effort
-- Poor governance
-- Hardcoded logic
-- No auditability
-- No version control
-- Difficult onboarding of new SAP migration objects
-- Heavy dependency on developer knowledge
-
-I want to completely redesign this as a governed, scalable, metadata-driven migration platform.
-
-=========================================================
-TARGET OBJECTIVE
-=========================================================
-
-Design a reusable SAP Migration Factory where:
-
-- Source data is extracted directly from PostgreSQL
-- Field mappings are stored in PostgreSQL metadata tables
-- Value mappings are stored in PostgreSQL metadata tables
-- Transformation rules are stored in PostgreSQL metadata tables
-- Validation rules are stored in PostgreSQL metadata tables
-- XML structures are configurable through metadata
-- New migration objects can be onboarded without code changes
-- New mappings can be added without code changes
-- New value mappings can be added without code changes
-- New validation rules can be added without code changes
-- SAP upload files are generated automatically
-- XML files are generated automatically
-- Full audit trail exists
-- Full lineage exists
-- Full reconciliation exists
-
-=========================================================
-CURRENT SOURCE SYSTEM
-=========================================================
-
-PostgreSQL
-
-Data will be extracted from PostgreSQL.
-
-Metadata tables should also be stored in PostgreSQL.
-
-=========================================================
-REQUIRED ARCHITECTURE
-=========================================================
-
-Design a full framework with the following layers:
-
-1. Metadata Repository Layer
-2. Source Extraction Layer
-3. Transformation Layer
-4. Data Quality Layer
-5. Staging Layer
-6. Governance Layer
-7. XML Generation Layer
-8. Reporting Layer
-9. Audit Layer
-10. Orchestration Layer
-
-=========================================================
-METADATA-DRIVEN DESIGN
-=========================================================
-
-Create metadata tables for:
-
-Migration Objects
-
-source_system
-migration_object
-
-Field Mapping
-
-field_mapping
-
-Fields:
-
-- source_system
-- object_name
-- source_field
-- target_field
-- target_datatype
-- default_value
-- mandatory_flag
-- transformation_rule_id
-- mapping_version
-- effective_date
-- expiry_date
-- approval_status
-
-Value Mapping
-
-value_mapping
-
-Fields:
-
-- source_system
-- object_name
-- source_value
-- target_value
-- mapping_type
-- version
-- approval_status
-
-Transformation Rules
-
-transformation_rule
-
-Fields:
-
-- rule_id
-- rule_name
-- rule_type
-- expression
-- active_flag
-
-Validation Rules
-
-validation_rule
-
-Fields:
-
-- object_name
-- field_name
-- validation_type
-- validation_expression
-- severity
-
-XML Definitions
-
-xml_template
-xml_node_mapping
-
-Audit Tables
-
-audit_log
-job_execution_log
-
-Approval Tables
-
-mapping_approval
-
-=========================================================
-TRANSFORMATION ENGINE
-=========================================================
-
-Create a metadata-driven transformation engine that supports:
-
-String Functions
-
-- trim
-- uppercase
-- lowercase
-- replace
-- substring
-- split
-- concatenate
-
-Date Functions
-
-- format conversion
-- timezone conversion
-- SAP date formatting
-
-Numeric Functions
-
-- rounding
-- scaling
-- percentage calculation
-
-Conditional Logic
-
-- IF THEN ELSE
-- CASE WHEN
-
-Lookup Functions
-
-- value mapping
-- crosswalk mapping
-
-Default Rules
-
-- default values
-- fallback values
-
-Null Handling
-
-- blank to null
-- null replacement
-
-All transformations must be driven entirely through metadata.
-
-No hardcoded business logic.
-
-=========================================================
-DATA QUALITY FRAMEWORK
-=========================================================
-
-Build a reusable validation framework supporting:
-
-Completeness Validation
-
-- mandatory fields
-
-Datatype Validation
-
-- string
-- integer
-- decimal
-- date
-- timestamp
-
-Business Validations
-
-- company code validation
-- profit center validation
-- object specific validation
-
-Duplicate Detection
-
-Referential Integrity
-
-Value Mapping Validation
-
-Unmapped Value Detection
-
-Data Quality Score Calculation
-
-Great Expectations integration.
-
-=========================================================
-STAGING MODEL
-=========================================================
-
-Create a governed staging architecture.
-
-Layers:
-
-RAW
-STANDARDIZED
-VALIDATED
-APPROVED
-READY_FOR_SAP
-
-Include:
-
-- Error tables
-- Rejection tables
-- Quarantine tables
-
-=========================================================
-GOVERNANCE FRAMEWORK
-=========================================================
-
-Design a complete governance model.
-
-Include:
-
-Version Control
-
-effective_date
-expiry_date
-version_number
-
-Approval Workflow
-
-DRAFT
-UAT
-APPROVED
-PRODUCTION
-RETIRED
-
-Auditability
-
-Track:
-
-- who created mapping
-- who modified mapping
-- when it changed
-- previous value
-- new value
-
-Lineage
-
-Source Field
-→ Transformation
-→ Staging Field
-→ XML Node
-
-=========================================================
-XML GENERATION FRAMEWORK
-=========================================================
-
-Generate SAP Migration Cockpit compatible XML.
-
-Requirements:
-
-- Metadata driven
-- Dynamic node generation
-- Nested structures
-- Parent-child relationships
-- Repeating nodes
-- Optional nodes
-- Namespace support
-- XSD validation
-
-No XML elements may be hardcoded.
-
-XML structure should come from metadata tables.
-
-=========================================================
-REPORTING FRAMEWORK
-=========================================================
-
-Generate:
-
-1. Data Quality Report
-2. Mapping Coverage Report
-3. Validation Error Report
-4. Reconciliation Report
-5. Execution Summary Report
-
-Formats:
-
-- Excel
-- CSV
-- PDF
-
-=========================================================
-OBSERVABILITY
-=========================================================
-
-Create monitoring dashboards for:
-
-Records Extracted
-Records Transformed
-Records Validated
-Records Rejected
-Records Loaded
-Records Converted To XML
-
-Processing Time
-
-Data Quality %
-
-Top Mapping Issues
-
-Top Validation Failures
-
-=========================================================
-SECURITY
-=========================================================
-
-Design enterprise security.
-
-Use:
-
-- Azure Key Vault
-- Managed Identity
-- Secrets Management
-- Encryption At Rest
-- Encryption In Transit
-
-Role Based Access:
-
-Admin
-
-Migration Lead
-
-Developer
-
-Business User
-
-Approver
-
-Viewer
-
-=========================================================
-TECHNOLOGY STACK
-=========================================================
-
-Python 3.11+
-
-Libraries:
-
-- pandas
-- polars
-- sqlalchemy
-- psycopg2
-- pydantic
-- lxml
-- great_expectations
-- loguru
-- openpyxl
-- pytest
-
-Infrastructure:
-
+You are a senior full-stack software architect, Python engineer, data migration specialist, database designer, and UI/UX engineer.
+
+I want you to DESIGN AND BUILD a production-style web application called:
+
+"GenMove Migration Accelerator"
+
+The application is an enterprise SAP data migration accelerator that combines:
+
+1. Migration Request Management
+2. Legacy File Upload
+3. SAP Preload Template Upload
+4. Source Data Profiling
+5. AI-Assisted Source-to-Target Mapping
+6. Transformation Rule Management
+7. SAP/Data Quality Validation
+8. Value Mapping Management
+9. Mapping Review and Approval
+10. Migration Readiness Scoring
+11. Excel Reporting
+12. Audit Logging
+
+IMPORTANT:
+Do not create only a demo screen.
+
+Build this as a modular, maintainable application with a real PostgreSQL database, backend services, validation engine, file-processing layer, and usable frontend.
+
+==================================================
+1. TECHNOLOGY STACK
+==================================================
+
+Use the following default stack:
+
+Backend:
+- Python
+- Flask
+- SQLAlchemy
+- Flask-Migrate / Alembic
 - PostgreSQL
-- Docker
-- GitHub Actions
-- Azure DevOps
-- Apache Airflow
+- Pandas
+- OpenPyXL
 
-=========================================================
-EXPECTED DELIVERABLES
-=========================================================
+Frontend:
+- HTML5
+- CSS
+- JavaScript
+- Bootstrap 5 or a similarly clean enterprise UI library
 
-Provide all of the following:
+AI Layer:
+Create an abstract LLM service layer.
 
-1. Executive Summary
+The application must NOT tightly couple business logic to one LLM vendor.
 
-2. Enterprise Architecture Diagram (Mermaid)
+Create something like:
 
-3. End-to-End Data Flow Diagram (Mermaid)
+services/
+    llm_service.py
 
-4. PostgreSQL ER Diagram
+with an interface such as:
 
-5. Complete PostgreSQL DDL Scripts
+suggest_mapping()
+explain_mapping()
+suggest_transformation()
+classify_transformation()
 
-6. Complete Folder Structure
+The implementation should be replaceable later with:
+- OpenAI/Azure OpenAI
+- Anthropic Claude
+- another enterprise-approved LLM
+
+Configuration:
+- .env
+- environment variables
+- config.py
+
+Never hard-code:
+- API keys
+- passwords
+- database credentials
+- secrets
+
+==================================================
+2. APPLICATION PURPOSE
+==================================================
+
+The application should support this complete process:
+
+User
+    ↓
+Create Migration Request
+    ↓
+Select Migration Object
+    ↓
+Upload Legacy Extract
+    ↓
+Upload SAP Preload Template
+    ↓
+Parse Source + Target Metadata
+    ↓
+Profile Source Data
+    ↓
+Generate Mapping Candidates
+    ↓
+AI-Assisted Mapping Recommendation
+    ↓
+User Reviews Mapping
+    ↓
+Define / Suggest Transformation Rules
+    ↓
+Run Validation Engine
+    ↓
+Identify Data Quality / SAP Readiness Issues
+    ↓
+Maintain Value Mappings
+    ↓
+Calculate Mapping Confidence + Validation Risk
+    ↓
+Business Review / Approval
+    ↓
+Generate Migration Readiness Report
+    ↓
+Export Approved Mapping / Rulebook
+    ↓
+Maintain Complete Audit History
+
+
+==================================================
+3. CORE DOMAIN MODEL
+==================================================
+
+The main hierarchy should be:
+
+Migration Project
+    ↓
+Migration Object
+    ↓
+Migration Request
+    ↓
+Source Dataset
+    ↓
+Target Template
+    ↓
+Field Mapping
+    ↓
+Transformation Rule
+    ↓
+Validation Rule
+    ↓
+Validation Result
+    ↓
+Value Mapping
+    ↓
+Approval
+    ↓
+Audit History
+
+
+==================================================
+4. MIGRATION REQUEST MODULE
+==================================================
+
+Create a Migration Request screen.
+
+Fields:
+
+Request ID
+Project
+Migration Object
+Object Description
+Source System
+Target System
+Migration Cycle
+Requestor
+Business Owner
+Technical Owner
+Created Date
+Status
+Comments
+
+Migration Object examples:
+
+Vendor Master
+Customer Master
+Material Master
+BOM
+Business Partner
+Purchase Orders
+Sales Orders
+Purchasing Info Records
+Condition Records
+
+Do NOT hard-code the application specifically for Vendor Master.
+
+The system must be generic enough to support new migration objects through configuration.
+
+Example status lifecycle:
+
+Draft
+Files Uploaded
+Analyzing
+Mapping Generated
+Mapping Review
+Validation Running
+Validation Review
+Business Review
+Approved
+Rejected
+Ready for Development
+Completed
+
+
+==================================================
+5. FILE UPLOAD MODULE
+==================================================
+
+Provide two primary uploads:
+
+A. Legacy / Source Extract
+B. Target / SAP Preload Template
+
+Initially support:
+
+.xlsx
+.xls
+.csv
+
+Design the file service so additional formats could be added later.
+
+Validate:
+- extension
+- file size
+- empty files
+- malformed files
+- duplicate columns
+- missing headers
+
+File storage should be abstracted behind:
+
+services/storage_service.py
+
+Start with local controlled storage for development.
+
+The architecture must allow migration later to:
+- SharePoint
+- Box
+- AWS S3
+- Azure Blob
+
+Do not tightly couple application logic to the local filesystem.
+
+
+==================================================
+6. HEADER DETECTION
+==================================================
+
+Migration spreadsheets may not have their field headers in row 1.
+
+Create intelligent header detection.
+
+Analyze the first configurable number of rows and determine the likely header row.
+
+Store:
+
+detected_header_row
+sheet_name
+confidence
+user_override
+
+Allow the user to preview the spreadsheet and manually override the detected header row.
+
+
+==================================================
+7. SOURCE DATA PROFILING
+==================================================
+
+After upload, automatically profile each source field.
+
+Generate metadata such as:
+
+field_name
+normalized_field_name
+inferred_data_type
+record_count
+null_count
+null_percentage
+distinct_count
+duplicate_count
+min_length
+max_length
+average_length
+minimum_value
+maximum_value
+sample_values
+possible_date_format
+possible_numeric_format
+
+Store profiling results in PostgreSQL.
+
+Show them in the UI.
+
+
+==================================================
+8. TARGET FIELD METADATA
+==================================================
+
+Parse the target preload template.
+
+Capture:
+
+target_field
+target_description
+data_type
+maximum_length
+mandatory_flag
+key_flag
+domain
+allowed_values
+format_rule
+business_description
+
+Architect the system so target metadata can also be enriched from reference tables.
+
+Create reusable tables such as:
+
+sap_field_reference
+sap_domain_reference
+validation_rule_reference
+
+Do not hard-code SAP definitions inside Python.
+
+
+==================================================
+9. MAPPING CANDIDATE ENGINE
+==================================================
+
+Before calling the LLM, create deterministic candidate matching.
+
+For every target field, compare available source fields.
+
+Use a combination of:
+
+1. Exact field-name matching
+2. Normalized-name matching
+3. Description matching
+4. Token similarity
+5. Pattern similarity
+6. Data-type compatibility
+7. Sample-value compatibility
+8. Previously approved mappings
 
 Example:
 
-migration_factory/
+Source:
+VEND_ID
+VEND_NM
+PAY_CD
+CNTRY_NM
+
+Target:
+LIFNR
+NAME1
+ZTERM
+LAND1
+
+The candidate engine should produce ranked candidates.
+
+Example:
+
+LAND1
+
+Candidate      Score
+CNTRY_NM       84
+COUNTRY        79
+REGION_CD      32
+
+Keep scoring implementation independent from the LLM.
+
+
+==================================================
+10. AI MAPPING ENGINE
+==================================================
+
+After candidate shortlisting, call the configurable LLM service.
+
+Provide the LLM with:
+
+Target field
+Target description
+Target datatype
+Maximum length
+Mandatory indicator
+Domain
+Candidate source fields
+Candidate descriptions
+Source datatype
+Source sample values
+Previously approved mapping if available
+
+Require STRUCTURED JSON output.
+
+Example:
+
+{
+  "target_field": "LAND1",
+  "source_field": "CNTRY_NM",
+  "confidence_score": 88,
+  "transformation_type": "VALUE_MAPPING",
+  "value_mapping_required": true,
+  "rationale": "Source contains country names while target expects a country code.",
+  "alternatives": []
+}
+
+Validate the returned JSON before persisting it.
+
+IMPORTANT:
+
+AI recommendations are recommendations only.
+
+Never automatically approve mappings merely because the confidence is high.
+
+Provide human review.
+
+
+==================================================
+11. MAPPING WORKSPACE
+==================================================
+
+Build an interactive mapping screen.
+
+Each row should show:
+
+Target Field
+Target Description
+Mandatory
+Target Type
+Target Length
+
+AI Suggested Source
+Confidence
+Transformation Type
+
+Business Selected Source
+Business Status
+
+Validation Risk
+Comments
+
+Actions:
+Accept Suggestion
+Change Source
+Reject
+Edit Transformation
+Add Comment
+View Samples
+View Validation Issues
+
+
+Use clear visual indicators:
+
+Green = Low Risk
+Amber = Needs Review
+Red = High Risk
+Gray = Not Evaluated
+
+Do not rely exclusively on colors.
+Also show text labels/icons for accessibility.
+
+
+==================================================
+12. TRANSFORMATION RULE ENGINE
+==================================================
+
+Supported transformation types should include:
+
+DIRECT
+TRIM
+UPPERCASE
+LOWERCASE
+CONCATENATE
+SUBSTRING
+DEFAULT_VALUE
+DATE_CONVERSION
+NUMERIC_CONVERSION
+VALUE_MAPPING
+LOOKUP
+CONDITIONAL
+CUSTOM_RULE
+NOT_MAPPED
+
+Each field mapping can contain:
+
+source_field
+target_field
+transformation_type
+transformation_expression
+transformation_description
+business_rule
+technical_rule
+mapping_status
+created_by
+approved_by
+version
+
+
+==================================================
+13. TRANSFORMATION RULEBOOK
+==================================================
+
+Create a reusable Transformation Rulebook.
+
+Users should be able to:
+
+Create
+Edit
+Version
+Review
+Approve
+Reject
+Deactivate
+Reuse
+
+transformation rules.
+
+Store rule history.
+
+Never overwrite approved rule versions.
+
+A rule modification should generate a new version.
+
+
+==================================================
+14. VALUE MAPPING MODULE
+==================================================
+
+For VALUE_MAPPING fields create mapping tables.
+
+Example:
+
+Source Field:
+CNTRY_NM
+
+Target:
+LAND1
+
+Source Value          Target Value
+
+Germany               DE
+United States         US
+India                 IN
+
+Status:
+Suggested
+Confirmed
+Rejected
+Needs Review
+
+Track:
+
+source_value
+target_value
+status
+suggested_by
+confirmed_by
+confirmed_date
+comments
+
+AI/reference-data suggestions must remain distinguishable from business-approved mappings.
+
+
+==================================================
+15. VALIDATION ENGINE
+==================================================
+
+Validation must NOT depend on the LLM.
+
+Create a deterministic validation framework.
+
+Implement reusable rules.
+
+Required initial checks:
+
+MANDATORY
+DATA_TYPE
+MAX_LENGTH
+DUPLICATE_KEY
+DOMAIN
+ALLOWED_VALUE
+DATE_FORMAT
+NUMERIC_FORMAT
+VALUE_MAPPING_COMPLETENESS
+NULL_CHECK
+UNMAPPED_TARGET
+INVALID_TRANSFORMATION
+REFERENTIAL_LOOKUP
+
+Each rule should produce:
+
+request_id
+mapping_id
+target_field
+source_field
+rule_code
+severity
+result
+affected_record_count
+affected_percentage
+sample_record_ids
+detail
+recommended_action
+executed_at
+
+
+==================================================
+16. VALIDATION SEVERITY
+==================================================
+
+Support:
+
+INFO
+LOW
+MEDIUM
+HIGH
+CRITICAL
+
+Make rule severity configurable by migration object/rule.
+
+Example:
+
+Duplicate primary key -> HIGH/CRITICAL
+Missing optional field -> LOW
+Target length exceeded -> MEDIUM/HIGH
+Missing mandatory field -> HIGH
+
+
+==================================================
+17. RECORD LEVEL TRACEABILITY
+==================================================
+
+A user must be able to drill from:
+
+Migration Object
+    ↓
+Target Field
+    ↓
+Validation Rule
+    ↓
+Affected Records
+
+Example:
+
+NAME1
+Maximum Length Check
+340 failures
+
+Clicking the result should display affected records and source values.
+
+Avoid loading millions of records directly into the browser.
+
+Use pagination and server-side queries.
+
+
+==================================================
+18. COMBINED MAPPING + VALIDATION RISK
+==================================================
+
+Mapping confidence and validation risk must be treated separately.
+
+Example:
+
+AI Confidence: 97%
+Validation Risk: HIGH
+
+A high-confidence mapping must NOT automatically mean migration readiness.
+
+Create a combined working view:
+
+Target Field
+Source Field
+Mapping Confidence
+Transformation
+Validation Status
+Validation Risk
+Business Status
+Approval Status
+
+
+==================================================
+19. READINESS SCORE
+==================================================
+
+Create a configurable Readiness Scoring Service.
+
+Do not hard-code a single formula.
+
+Example factors:
+
+Mapping completion
+Mapping approval
+Mandatory field failures
+Critical validation failures
+High risk failures
+Medium risk failures
+Incomplete value mappings
+Unresolved business decisions
+
+Return:
+
+readiness_score
+readiness_status
+
+Possible statuses:
+
+NOT_READY
+NEEDS_REVIEW
+CONDITIONALLY_READY
+READY
+
+Also return the components contributing to the score so the result is explainable.
+
+
+==================================================
+20. DASHBOARD
+==================================================
+
+Create a professional enterprise dashboard.
+
+Display:
+
+Total Migration Requests
+Requests by Status
+Objects in Progress
+Mapping Completion %
+Validation Pass %
+Open Critical Issues
+Open High Risk Issues
+Mappings Pending Approval
+Value Mappings Pending
+Ready Objects
+Not Ready Objects
+
+For each migration object show:
+
+Object
+Cycle
+Owner
+Mapping Completion
+Validation Pass Rate
+Readiness Score
+Status
+Last Updated
+
+
+==================================================
+21. REQUEST DETAIL PAGE
+==================================================
+
+Navigation tabs:
+
+Overview
+Files
+Source Profile
+Mapping
+Transformation Rules
+Validation
+Value Mappings
+Approvals
+Reports
+Audit History
+
+
+==================================================
+22. APPROVAL WORKFLOW
+==================================================
+
+Support formal review.
+
+Roles:
+
+Developer
+Data Migration Analyst
+Functional SME
+Business Reviewer
+Approver
+Administrator
+
+Approval actions:
+
+Submit for Review
+Approve
+Approve with Conditions
+Reject
+Request Changes
+
+Store:
+
+approval_status
+approver
+timestamp
+comments
+mapping_version
+
+Changes to an approved mapping should invalidate or supersede the associated approval according to an explicit versioning policy.
+
+
+==================================================
+23. AUDIT LOG
+==================================================
+
+Record important actions.
+
+Examples:
+
+Request created
+File uploaded
+Header changed
+AI mapping generated
+Mapping manually modified
+Transformation rule changed
+Validation executed
+Value mapping updated
+Approval submitted
+Approved
+Rejected
+Report generated
+
+Capture:
+
+user
+action
+entity
+entity_id
+old_value
+new_value
+timestamp
+
+
+==================================================
+24. REPORTING
+==================================================
+
+Generate an Excel Migration Readiness Report.
+
+Use OpenPyXL.
+
+Workbook tabs:
+
+1. Executive Summary
+2. Mapping & Risk Summary
+3. Validation Detail
+4. Value Mapping
+5. Transformation Rulebook
+6. Approval History
+
+Executive Summary:
+
+Object
+Request ID
+Source System
+Record Count
+Total Fields
+Mapped Fields
+Approved Fields
+High Risk Issues
+Medium Risk Issues
+Readiness Score
+Readiness Status
+
+Apply professional formatting.
+
+Conditional formatting:
+
+Green = approved/low risk
+Amber = review
+Red = high/critical risk
+
+Freeze headers.
+Enable filters.
+Automatically size columns reasonably.
+Use readable date and percentage formats.
+
+
+==================================================
+25. DATABASE DESIGN
+==================================================
+
+Use normalized PostgreSQL tables.
+
+Create appropriate tables including:
+
+users
+roles
+projects
+migration_objects
+migration_requests
+uploaded_files
+source_fields
+source_profiles
+target_fields
+sap_field_reference
+sap_domain_reference
+field_mappings
+mapping_candidates
+transformation_rules
+transformation_rule_versions
+validation_rules
+validation_runs
+validation_results
+validation_result_records
+value_mappings
+approvals
+audit_logs
+reports
+
+Create:
+
+Primary keys
+Foreign keys
+Indexes
+Unique constraints
+created_at
+updated_at
+
+where appropriate.
+
+Use migrations.
+
+
+==================================================
+26. AUTHENTICATION
+==================================================
+
+For local MVP development, implement a replaceable authentication layer.
+
+Do NOT tightly couple authorization logic to local authentication.
+
+Structure it so enterprise SSO/Microsoft Entra ID can be integrated later.
+
+Implement role-based authorization separately from authentication.
+
+
+==================================================
+27. ARCHITECTURE
+==================================================
+
+Use a modular Flask architecture.
+
+Suggested structure:
+
+genmove/
 │
-├── config
-├── metadata
-├── src
-│   ├── extract
-│   ├── transform
-│   ├── validation
-│   ├── staging
-│   ├── xml
-│   ├── reporting
-│   ├── governance
-│   ├── audit
-│   └── orchestration
+├── app/
+│   ├── __init__.py
+│   ├── models/
+│   ├── routes/
+│   ├── services/
+│   │   ├── file_service.py
+│   │   ├── storage_service.py
+│   │   ├── metadata_service.py
+│   │   ├── profiling_service.py
+│   │   ├── matching_service.py
+│   │   ├── llm_service.py
+│   │   ├── mapping_service.py
+│   │   ├── transformation_service.py
+│   │   ├── validation_service.py
+│   │   ├── readiness_service.py
+│   │   ├── approval_service.py
+│   │   ├── audit_service.py
+│   │   └── report_service.py
+│   │
+│   ├── validators/
+│   ├── repositories/
+│   ├── templates/
+│   ├── static/
+│   └── utils/
 │
-├── tests
-├── reports
-├── logs
-├── output
-└── docs
+├── migrations/
+├── tests/
+├── instance/
+├── run.py
+├── config.py
+├── requirements.txt
+├── .env.example
+├── .gitignore
+├── README.md
+└── docker-compose.yml
 
-7. Class Designs
 
-Create production-quality implementations for:
+==================================================
+28. UI DESIGN
+==================================================
 
-- DatabaseManager
-- MetadataRepository
-- ObjectRegistry
-- SourceExtractor
-- TransformationEngine
-- MappingProcessor
-- ValidationEngine
-- StagingManager
-- XMLGenerator
-- AuditManager
-- ReportManager
-- WorkflowOrchestrator
+Use a modern enterprise layout.
 
-8. YAML Configuration Structure
+Left navigation:
 
-9. Logging Framework Design
+Dashboard
+Migration Requests
+Migration Objects
+Mapping Workspace
+Validation
+Rulebook
+Approvals
+Reports
+Administration
 
-10. Error Handling Strategy
+Top bar:
 
-11. Retry Mechanism
+GenMove Migration Accelerator
 
-12. Rollback Strategy
+User
+Role
+Environment
 
-13. Quarantine Handling
+Keep screens clean and professional.
 
-14. Airflow DAG Design
+Avoid excessive animation, gradients, oversized cards, and decorative UI.
 
-15. Docker Deployment Design
+Prioritize data tables and operational usability.
 
-16. GitHub Actions CI/CD Design
 
-17. Testing Strategy
+==================================================
+29. USER EXPERIENCE
+==================================================
 
-18. Performance Optimization Strategy
+The application should guide users through:
 
-19. Scalability Strategy
+STEP 1
+Create Request
 
-Design for:
+STEP 2
+Upload Source
 
-- 1 Million Records
-- 5 Million Records
-- 10 Million Records
-- 50 Million Records
+STEP 3
+Upload Target Template
+
+STEP 4
+Analyze
+
+STEP 5
+Review AI Mapping
+
+STEP 6
+Review Transformation Rules
+
+STEP 7
+Run Validation
+
+STEP 8
+Resolve Issues
+
+STEP 9
+Complete Value Mappings
+
+STEP 10
+Submit for Approval
+
+STEP 11
+Generate Final Rulebook / Readiness Report
+
+
+==================================================
+30. GENERIC DESIGN REQUIREMENT
+==================================================
+
+This is extremely important.
+
+Do NOT design logic like:
+
+if object == "Vendor":
+    ...
+
+The framework must be metadata/configuration driven.
+
+Examples:
+
+Vendor
+Customer
+Material
+BOM
+Sales Order
+
+should use the same core mapping and validation framework.
+
+Differences should come from:
+
+metadata
+configuration
+validation rules
+reference tables
+object-specific rule configuration
+
+
+==================================================
+31. TESTING
+==================================================
+
+Create tests for:
+
+File parsing
+Header detection
+Data profiling
+Candidate scoring
+Mapping persistence
+Transformation execution
+Validation rules
+Value mappings
+Readiness scoring
+Approval workflow
+Authorization
+
+Create representative synthetic test fixtures.
+
+Do NOT include real company data.
+
+
+==================================================
+32. SAMPLE DEMO
+==================================================
+
+Create a synthetic Vendor Master example.
+
+Source:
+
+VEND_ID
+VEND_NM
+PAY_CD
+CNTRY_NM
+
+Target:
+
+LIFNR
+NAME1
+ZTERM
+LAND1
+
+Demonstrate mappings such as:
+
+VEND_ID -> LIFNR
+VEND_NM -> NAME1
+PAY_CD -> ZTERM
+CNTRY_NM -> LAND1
+
+Demonstrate:
+
+Duplicate VEND_ID
+NAME1 exceeding target length
+Payment term requiring mapping
+Country name requiring code mapping
+
+Use synthetic data only.
+
+
+==================================================
+33. SECURITY
+==================================================
+
+Follow secure coding practices.
 
 Include:
 
-- Parallel Processing
-- Bulk Loads
-- Chunk Processing
-- PostgreSQL Partitioning
-- Incremental Processing
+Input validation
+Filename sanitization
+Secure file handling
+SQLAlchemy parameterization
+CSRF protection where applicable
+Authorization checks
+Safe error messages
+Secrets through environment variables
+Upload limits
+Allowed extension checks
+Audit logging
 
-20. Complete End-To-End Execution Flow
+Never execute code contained inside uploaded data.
 
-Show:
 
-PostgreSQL Source
-→ Metadata Retrieval
-→ Transformation
-→ Validation
-→ Staging
-→ Reconciliation
-→ XML Generation
-→ SAP Migration Cockpit Upload File
+==================================================
+34. ERROR HANDLING
+==================================================
 
-=========================================================
-FINAL EXPECTATION
-=========================================================
+Provide user-friendly errors.
 
-Produce a complete production-ready blueprint, architecture, database design, governance model, class design, deployment design, and implementation strategy for an Enterprise Metadata-Driven SAP S/4HANA Public Cloud Migration Factory.
+Do NOT expose stack traces to normal users.
 
-The solution should allow onboarding of new SAP migration objects entirely through metadata without requiring code changes.
+Log technical errors separately.
+
+Example:
+
+Instead of:
+
+KeyError: Column X
+
+show:
+
+"The expected field 'X' could not be found in the uploaded source file."
+
+
+==================================================
+35. OBSERVABILITY
+==================================================
+
+Implement structured application logging.
+
+Capture important events including:
+
+Request processing
+File parsing
+Profiling
+AI request status
+Validation execution
+Report generation
+Failures
+
+Never log:
+passwords
+API keys
+access tokens
+
+
+==================================================
+36. DOCUMENTATION
+==================================================
+
+Create a complete README containing:
+
+Application Overview
+Architecture
+Folder Structure
+Prerequisites
+PostgreSQL Setup
+Environment Variables
+Installation
+Database Migration
+Seed Data
+Running Locally
+Running Tests
+AI Provider Configuration
+Troubleshooting
+
+
+==================================================
+37. DEVELOPMENT APPROACH
+==================================================
+
+Do not try to place the entire application into a few huge files.
+
+Use clean separation of concerns.
+
+Routes:
+Handle HTTP requests.
+
+Services:
+Business logic.
+
+Repositories:
+Database access where useful.
+
+Models:
+Database entities.
+
+Validators:
+Validation rules.
+
+Templates:
+Presentation.
+
+JavaScript:
+Client-side interaction.
+
+
+==================================================
+38. CODE QUALITY
+==================================================
+
+Use:
+
+Type hints where appropriate
+Docstrings
+Clear naming
+Small reusable functions
+Central configuration
+Enums/constants instead of magic strings
+Transactions where appropriate
+Consistent error handling
+
+Avoid unnecessary abstraction but keep the design extensible.
+
+
+==================================================
+39. IMPLEMENTATION ORDER
+==================================================
+
+Build the application incrementally in this order:
+
+PHASE 1
+Project skeleton
+Configuration
+PostgreSQL
+Database models
+Migration scripts
+Authentication foundation
+
+PHASE 2
+Migration Request module
+Object configuration
+File upload
+File storage abstraction
+
+PHASE 3
+Excel/CSV parser
+Header detection
+Metadata extraction
+Source profiling
+
+PHASE 4
+Target metadata
+Candidate matching engine
+Mapping workspace
+
+PHASE 5
+LLM abstraction
+AI mapping recommendation
+Structured JSON validation
+
+PHASE 6
+Transformation Rulebook
+Transformation engine
+Value Mapping module
+
+PHASE 7
+Validation framework
+Validation execution
+Record-level issue tracking
+
+PHASE 8
+Readiness scoring
+Dashboard
+
+PHASE 9
+Approval workflow
+Version control
+Audit history
+
+PHASE 10
+Excel report generation
+Final UI improvements
+Tests
+Documentation
+
+
+==================================================
+40. CRITICAL DESIGN PRINCIPLES
+==================================================
+
+Follow these principles throughout development:
+
+1. AI recommends. Humans approve.
+
+2. Mapping confidence is NOT the same as data quality.
+
+3. Validation must be deterministic.
+
+4. Keep AI logic separate from validation logic.
+
+5. Keep file storage replaceable.
+
+6. Keep LLM provider replaceable.
+
+7. Keep authentication replaceable.
+
+8. Make migration objects configuration-driven.
+
+9. Approved mappings and transformation rules must be versioned.
+
+10. Every important decision should be auditable.
+
+11. Never overwrite historical results.
+
+12. Excel is an output/report, not the application's primary datastore.
+
+13. PostgreSQL is the authoritative application database.
+
+14. Reference data should come from configurable reference tables.
+
+15. Business users must be able to override AI recommendations.
+
+16. Every override should be auditable.
+
+17. Do not send unnecessary source data to the LLM. Prefer metadata and limited representative samples.
+
+18. Do not expose secrets or sensitive information in logs.
+
+
+==================================================
+41. EXPECTED FINAL WORKFLOW
+==================================================
+
+The final product should support:
+
+Legacy Extract
+      │
+      ▼
+Data Profiling
+      │
+      ▼
+Candidate Matching
+      │
+      ▼
+AI Mapping Recommendation
+      │
+      ▼
+Human Mapping Review
+      │
+      ▼
+Transformation Rules
+      │
+      ▼
+Validation Engine
+      │
+      ▼
+Value Mapping
+      │
+      ▼
+Risk Assessment
+      │
+      ▼
+Business / Functional Approval
+      │
+      ▼
+Migration Readiness
+      │
+      ├──── Excel Readiness Report
+      ├──── Approved Field Mapping
+      ├──── Transformation Rulebook
+      └──── Validation Evidence
+
+
+==================================================
+42. IMPORTANT INSTRUCTIONS TO YOU
+==================================================
+
+You are responsible for implementing this application, not simply describing it.
+
+First inspect the existing repository.
+
+If code already exists:
+- understand the current architecture
+- preserve working functionality
+- modify/refactor instead of unnecessarily replacing everything
+- identify reusable components
+- inspect existing README and configuration
+
+If starting from an empty repository:
+- create the complete project structure
+
+Do not stop after producing an architecture document.
+
+Create actual working files.
+
+For every implementation phase:
+
+1. State what you are implementing.
+2. Create/modify the required files.
+3. Run relevant tests or checks.
+4. Fix errors you encounter.
+5. Continue to the next logical implementation step.
+6. Keep README and requirements current.
+
+Do not use mock implementations for core functionality where a reasonable working implementation can be created.
+
+When external credentials such as an LLM API key are unavailable:
+- create the real integration interface
+- use environment configuration
+- provide a clearly labeled development fallback
+- never invent credentials
+
+Prioritize getting the complete core workflow working end-to-end:
+
+Create Request
+→ Upload Files
+→ Parse
+→ Profile
+→ Map
+→ Validate
+→ Review
+→ Approve
+→ Export
+
+Start by inspecting the repository and then begin implementation.
